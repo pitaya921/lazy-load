@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+</head>
+<body>
+	<img src="http://placehold.it/350x1200" alt="#"/>
+	<div id="test">
+		<img src="http://placehold.it/10x100" alt="#" data-src="http://placehold.it/350x600"/><br>
+		<img src="http://placehold.it/10x10" alt="#" data-src="http://placehold.it/350x700"/><br>
+		<img src="http://placehold.it/10x10" alt="#" data-src="http://placehold.it/350x800"/><br>
+		<img src="http://placehold.it/10x10" alt="#" data-src="http://placehold.it/350x900"/>
+	</div>
+	<script>
+		window.onload = function(){
+			var mousewheelevt=(/Firefox/i.test(navigator.userAgent))?"DOMMouseScroll": "mousewheel"
+			var index = 0,
+				$ = function(id){return document.getElementById(id)},
+				imgs = $('test').getElementsByTagName('img'),
+				lazy = function(){
+					var i = index,
+						l = imgs.length
+					var scrollTop = document.documentElement.scrollTop ? document.documentElement.scrollTop :document.body.scrollTop
+					for(i,l;i<l;i++){
+						if(imgs[i].offsetTop - scrollTop < window.innerHeight+100){
+							imgs[i].setAttribute('src',imgs[i].getAttribute('data-src'))
+							index = i
+						}
+					}
+				};
+				document.addEventListener(mousewheelevt,lazy,false)
+		}
+	</script>
+</body>
+</html>
